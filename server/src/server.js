@@ -5,6 +5,7 @@ const express = require("express");
 
 // Crea una instancia de Express, que se utilizará para configurar el servidor
 const server = express();
+const morgan = require("morgan");
 
 // Importa el módulo de rutas definidas en './routes/routes'. Este módulo contiene las definiciones de las rutas de tu aplicación
 const router = require('./routes/routes');
@@ -25,7 +26,8 @@ server.use((req, res, next) => {
 });
 
 //Esto es un middleware, se debe usar si o si para poder usar el metodo post, porque la informacion viaja en .json y el backend no lo entiende a menos que se use ese middleware
-server.use(express.json());
+server.use(express.json());    //Middleware
+server.use(morgan('dev'));  //Middleware
 
 // Monta el router en la ruta '/home'. Esto significa que todas las rutas definidas en el módulo 'router' estarán accesibles bajo el prefijo '/home'
 // Por ejemplo, si tienes una ruta definida como '/' en tu módulo de rutas, será accesible como '/home/' en tu aplicación

@@ -8,6 +8,8 @@ const filteredByCompleted = require("../controllers/filteredByCompleted");
 const filteredByAll = require("../controllers/filteredByAll");
 const getTasksByUser = require("../controllers/getTasksByUser");
 const clearAllCompleted = require("../controllers/clearAllCompleted");
+const login = require("../controllers/login");
+const getAllUsers = require("../controllers/getAllUsers");
 
 
 router.post('/signup', createUser);                //Funciona
@@ -22,6 +24,8 @@ router.get('/alltasks', filteredByAll);            //Funciona
 router.get('/mytasks/:userId/actives', filteredByActive); //Funciona
 router.get('/mytasks/:userId/completed', filteredByCompleted); //Funciona
 router.delete('/mytasks/:userId/clearcompleted', clearAllCompleted); //Funciona
+router.get('/landing', login);                      //Funciona
+router.get('/allusers', getAllUsers)                //Funciona
 
 
 module.exports = router;
@@ -56,3 +60,9 @@ module.exports = router;
 
 // router.delete('/mytasks/:userId/clearcompleted', clearAllCompleted);
     //ruta: http://localhost:3001/home/mytasks/e8df59f3-852a-4b46-aa41-93a1b0a75be5/clearcompleted
+
+// router.get('/landing', login);  
+    //ruta: http://localhost:3001/home/landing
+
+// router.get('/allusers', getAllUsers)
+    //ruta: http://localhost:3001/home/allusers

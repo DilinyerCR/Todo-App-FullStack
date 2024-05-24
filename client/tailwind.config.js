@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  "darkMode": 'selector',
   theme: {
     extend: {
       //Esto se conoce como "Variables CSS personalizadas", es como traducir las variables de CSS con "root:{}" a Tailwind.
@@ -15,16 +16,16 @@ export default {
         'check-background': 'linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
 
         //! Tonos neutros - Tema claro
-        'very-light-gray': 'hsl(0, 0%, 98%)',
-        'very-light-grayish-blue': 'hsl(236, 33%, 92%)',
+        'very-light-gray': 'hsl(0, 0%, 98%)',                  //Form bg
+        'very-light-grayish-blue': 'hsl(236, 33%, 92%)',       //Body bg
         'light-grayish-blue': 'hsl(233, 11%, 84%)',            //input text color
         'dark-grayish-blue': 'hsl(236, 9%, 61%)',
-        'very-dark-grayish-blue': 'hsl(235, 19%, 35%)',
+        'very-dark-grayish-blue': 'hsl(235, 19%, 35%)',        //Input text color
 
         //! Tonos neutros - Tema oscuro
         'very-dark-blue': 'hsl(235, 21%, 11%)',                //Body bg
         'very-dark-desaturated-blue': 'hsl(235, 24%, 19%)',    //Form bg
-        'light-grayish-blue-dark': 'hsl(234, 39%, 85%)',
+        'light-grayish-blue-dark': 'hsl(234, 39%, 85%)',       //Input text color
         'light-grayish-blue-dark-hover': 'hsl(236, 33%, 92%)',
         'dark-grayish-blue-dark': 'hsl(234, 11%, 52%)',
         'very-dark-grayish-blue-dark': 'hsl(233, 14%, 35%)',   //input outline color
@@ -33,7 +34,8 @@ export default {
       // Extiende el tema de Tailwind para agregar una clase personalizada 'mobile-dark'
       // que establece una imagen de fondo para dispositivos móviles
       backgroundImage: theme => ({
-        'mobile-dark': "url('../../assets/bg-mobile-dark.jpg')", //No se porque pero esta debe ser la ruta, y al parecer la carpeta assets debe estar dentro de la carpeta public para que funcione.
+        'mobile-dark': "url('../../assets/bg-mobile-dark.jpg')",
+        'mobile-light': "url('../../assets/bg-mobile-light.jpg')" //No se porque pero esta debe ser la ruta, y al parecer la carpeta assets debe estar dentro de la carpeta public para que funcione.
       }),
       spacing: {
         '-40': '-40px', // Margen negativo personalizado, esto me permite usar margenes negavitos, al parecer puedo colocar cualquier valor y funciona!
