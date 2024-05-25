@@ -10,6 +10,7 @@ const getTasksByUser = require("../controllers/getTasksByUser");
 const clearAllCompleted = require("../controllers/clearAllCompleted");
 const login = require("../controllers/login");
 const getAllUsers = require("../controllers/getAllUsers");
+const deleteAllUsers = require("../controllers/deleteAllUsers");
 
 
 router.post('/signup', createUser);                //Funciona
@@ -26,6 +27,7 @@ router.get('/mytasks/:userId/completed', filteredByCompleted); //Funciona
 router.delete('/mytasks/:userId/clearcompleted', clearAllCompleted); //Funciona
 router.get('/landing', login);                      //Funciona
 router.get('/allusers', getAllUsers)                //Funciona
+router.delete('/deleteallusers', deleteAllUsers)
 
 
 module.exports = router;

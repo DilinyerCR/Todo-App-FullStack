@@ -1,30 +1,37 @@
 import { useEffect, useState } from "react"
-// import { Link } from "react-router-dom"
 import Sun from "/assets/icon-sun.svg"
 import Moon from "/assets/icon-moon.svg"
 import { useDispatch, useSelector } from "react-redux"
-import { getAllUsers, loginUser } from "../../redux/actions"
+import { createUser, getAllUsers, loginUser } from "../../redux/actions"
 
 
 const Landing = () => {
-  //! Global States
-  //Estado global donde se almacenan todos los usuarios de la DB
-  const users = useSelector((state) => state.allUsers)
-  //Estado global para saber si el usuario existe o no
-  const access = useSelector((state) => state.loginAccess)
+//! Global States
+  const created = useSelector((state) => state.userCreated)
+  const isTaken = useSelector((state) => state.userTaken)
   //useDispatch
   const dispatch = useDispatch();
 
-  //! Local States
+
+//! Local States
   //Estado local para cambiar el tema
   const [ theme, setTheme ] = useState("light"); 
+
   //Estado local para almacenar lo que se escriba el los 2 inputs del form
   const [ loginInput, setLoginInput ] = useState({
     email: "",
     password: ""
   });
 
-  //! useEffects
+  //Estado local para controlar la visibilidad del mensaje de email ya en uso
+  const [isTakenMessage, setIsTakenMessage] = useState(false);
+
+  //Estado local para controlar la visibilidad del mensaje de registro exitoso
+  const [createdMessage, setCreatedMessage] = useState(false);
+
+
+//! useEffects
+  //useEffect para cambiar el tema
   useEffect(() => {
     if(theme === "dark") {
       document.querySelector("html").classList.add("dark")
@@ -33,12 +40,39 @@ const Landing = () => {
     }
   }, [theme])
 
+//useEffect para ejecutar getAllUsers cuando el componente se monta
+useEffect(() => {
+  dispatch(getAllUsers());
+}, [dispatch]);
+
+//useEffect para controlar la visibilidad de isTaken durante 5 segundos
+  useEffect(() => {
+    if (!isTaken) return; // No hacer nada si isTaken es falso
+    setIsTakenMessage(true); // Mostrar el mensaje
+    const timer = setTimeout(() => {
+      setIsTakenMessage(false); // Ocultar el mensaje después de 4 segundos
+    }, 5000);
+    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
+  }, [isTaken]);
+
+//useEffect para controlar la visibilidad de created durante 5 segundos
+  useEffect(() => {
+    if (!created) return; // No hacer nada si isTaken es falso
+    setCreatedMessage(true); // Mostrar el mensaje
+    const timer = setTimeout(() => {
+      setCreatedMessage(false); // Ocultar el mensaje después de 4 segundos
+    }, 5000); 
+    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
+  }, [created]);
+
+
   //! Functions
   //Funcion para setear el estado local con light o dark
   const handleChangeTheme = () => {
     setTheme(prevTheme => prevTheme === "light" ?  "dark" : "light")
   };
 
+  //Funcion para setear el estado local loginInput con el valor de los inputs
   const handleChangeInput = (event) => {
     setLoginInput({
       ...loginInput,
@@ -46,17 +80,27 @@ const Landing = () => {
     })
   }
 
+  //Funcion para prevenir que se recargue la pagina en los submits del form
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatch(loginUser(loginInput.email, loginInput.password)); //Asegúrate de pasar los valores correctos aquí
   };
 
+  //Funcion para logear, despacha el valor de los inputs a la action loginUser
   const login = () => {
-    dispatch(getAllUsers());
-    console.log(access)
+    dispatch(loginUser(loginInput.email, loginInput.password));
   }
-  
 
+  //Funcion para crear nuevos usuarios, despacha el valor de los inputs a la action createUser
+  const createNewUser = () => {
+    dispatch(createUser(loginInput.email, loginInput.password))
+    setLoginInput({
+      email: "",
+      password: ""
+    });
+    dispatch(getAllUsers());
+  }
+
+  
   return (
     <div>
         <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between ">
@@ -79,17 +123,22 @@ const Landing = () => {
                 <input className="w-full h-48 py-8 px-12 rounded-6 dark:text-light-grayish-blue-dark text-very-dark-grayish-blue text-13 bg-very-light-gray dark:bg-very-dark-desaturated-blue outline outline-1 outline-very-dark-grayish-blue-dark focus:shadow-sm focus:shadow-bright-blue" 
                 type="password" placeholder="Password" name="password" value={loginInput.password} onChange={handleChangeInput}/>
 
-                {/* <Link to="/home" className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center">
-                  <button className="w-full h-full" type="submit" >Log in</button>
-                </Link> */}
-
-                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login}>Log in</button>
+                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login} disabled={!loginInput.email ||!loginInput.password}>Log in</button>
 
                 <p className="dark:text-light-grayish-blue text-very-dark-grayish-blue text-14 hover:cursor-pointer hover:underline decoration-bright-blue">Forgotten password?</p>
 
                 <div className="w-full m-8 outline outline-1 outline-dark-grayish-blue dark:outline-very-dark-grayish-blue-dark"></div>
 
-                <button className="text-light-grayish-blue text-14 w-4/6 h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300" type="submit">Create new account</button>
+                <button className="text-light-grayish-blue text-14 w-4/6 h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300" type="submit" onClick={createNewUser} disabled={!loginInput.email ||!loginInput.password}>Create new account</button>
+
+                {/* {isTaken && <p className="mt-10 text-red-800 text-12 dark:text-red-500">"That email is already in use."</p>}
+
+                {created && <p className="mt-10 text-green-800 text-12 dark:text-green-500">"Congratulations, Your registration was successful."</p>} */}
+
+                {isTakenMessage && isTaken && <p className="mt-10 text-red-800 text-12 dark:text-red-500">"That email is already in use."</p>}
+
+                {createdMessage && created && <p className="mt-10 text-green-800 text-12 dark:text-green-500">"Congratulations, Your registration was successful."</p>}
+
             </form>
         </div>
     </div>
