@@ -5,9 +5,9 @@ const { Task, User } = require('../db');
 
 const addTask = async (req, res) => {
     try {
-        const { userId, name } = req.body; //El req.body es unicamente por donde me llega la informacion, solamente lo usa el metodo "post" , se puede usar en otros metodos pero es mala practica.
-        //El userId no esta en el model, el userId llega por body, por ejemplo: el usuario se registra y luego de eso se le habilita la seccion de Posteos, al registrarse se guardan sus datos en la DB con su userId.
-
+        const { userId } = req.params; //El userId no esta en el model, el userId llega por params, por ejemplo: el usuario se registra y luego de eso se le habilita la seccion de Posteos, al registrarse se guardan sus datos en la DB con su userId y se muestra su userId en la URL de la pagina como tal.
+        const { name } = req.body; //El req.body es unicamente por donde me llega la informacion, solamente lo usa el metodo "post" , se puede usar en otros metodos pero es mala practica.
+        
         const newTask = await Task.create({
             name: name
         })
