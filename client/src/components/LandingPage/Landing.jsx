@@ -3,25 +3,37 @@ import Sun from "/assets/icon-sun.svg"
 import Moon from "/assets/icon-moon.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { createUser, getAllUsers, loginUser } from "../../redux/actions"
+import validator from "./landingValidation"
+
 
 
 const Landing = () => {
-//! Global States
-  const created = useSelector((state) => state.userCreated)
-  const isTaken = useSelector((state) => state.userTaken)
-  //useDispatch
-  const dispatch = useDispatch();
+
+  //! Global States
+    const created = useSelector((state) => state.userCreated)
+    const isTaken = useSelector((state) => state.userTaken)
+    //useDispatch
+    const dispatch = useDispatch();
 
 
-//! Local States
-  //Estado local para cambiar el tema
-  const [ theme, setTheme ] = useState("light"); 
+  //! Local States
+    //Estado local para cambiar el tema
+    const [ theme, setTheme ] = useState(() => {
+      //Esto es para cambiar el tema segun el tema de tu S.O
+      if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return  "light";
+    }); 
 
   //Estado local para almacenar lo que se escriba el los 2 inputs del form
   const [ loginInput, setLoginInput ] = useState({
     email: "",
     password: ""
   });
+
+  //Estado local para almacenar los posibles errores al llenar el formulario
+  const [ errors, setErrors ] = useState({});
 
   //Estado local para controlar la visibilidad del mensaje de email ya en uso
   const [isTakenMessage, setIsTakenMessage] = useState(false);
@@ -30,7 +42,7 @@ const Landing = () => {
   const [createdMessage, setCreatedMessage] = useState(false);
 
 
-//! useEffects
+  //! useEffects
   //useEffect para cambiar el tema
   useEffect(() => {
     if(theme === "dark") {
@@ -40,30 +52,30 @@ const Landing = () => {
     }
   }, [theme])
 
-//useEffect para ejecutar getAllUsers cuando el componente se monta
-useEffect(() => {
-  dispatch(getAllUsers());
-}, [dispatch]);
-
-//useEffect para controlar la visibilidad de isTaken durante 5 segundos
+  //useEffect para ejecutar getAllUsers cuando el componente se monta
   useEffect(() => {
-    if (!isTaken) return; // No hacer nada si isTaken es falso
-    setIsTakenMessage(true); // Mostrar el mensaje
-    const timer = setTimeout(() => {
-      setIsTakenMessage(false); // Ocultar el mensaje después de 4 segundos
-    }, 5000);
-    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
-  }, [isTaken]);
+    dispatch(getAllUsers());
+  }, [dispatch]);
 
-//useEffect para controlar la visibilidad de created durante 5 segundos
-  useEffect(() => {
-    if (!created) return; // No hacer nada si isTaken es falso
-    setCreatedMessage(true); // Mostrar el mensaje
-    const timer = setTimeout(() => {
-      setCreatedMessage(false); // Ocultar el mensaje después de 4 segundos
-    }, 5000); 
-    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
-  }, [created]);
+  //useEffect para controlar la visibilidad de isTaken durante 5 segundos
+    useEffect(() => {
+      if (!isTaken) return; // No hacer nada si isTaken es falso
+      setIsTakenMessage(true); // Mostrar el mensaje
+      const timer = setTimeout(() => {
+        setIsTakenMessage(false); // Ocultar el mensaje después de 4 segundos
+      }, 5000);
+      return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
+    }, [isTaken]);
+
+  //useEffect para controlar la visibilidad de created durante 5 segundos
+    useEffect(() => {
+      if (!created) return; // No hacer nada si isTaken es falso
+      setCreatedMessage(true); // Mostrar el mensaje
+      const timer = setTimeout(() => {
+        setCreatedMessage(false); // Ocultar el mensaje después de 4 segundos
+      }, 5000); 
+      return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta
+    }, [created]);
 
 
   //! Functions
@@ -72,12 +84,17 @@ useEffect(() => {
     setTheme(prevTheme => prevTheme === "light" ?  "dark" : "light")
   };
 
-  //Funcion para setear el estado local loginInput con el valor de los inputs
+  //Funcion para setear el estado local loginInput y errors con el valor de los inputs
   const handleChangeInput = (event) => {
     setLoginInput({
       ...loginInput,
       [event.target.name] : event.target.value  //El .name es el name="" de mis inputs
     })
+
+    setErrors(validator({
+      ...loginInput,
+      [event.target.name] : event.target.value
+    }))
   }
 
   //Funcion para prevenir que se recargue la pagina en los submits del form
@@ -100,7 +117,9 @@ useEffect(() => {
     dispatch(getAllUsers());
   }
 
-  
+
+
+  //! ===Rendering===
   return (
     <div>
         <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between ">
@@ -112,24 +131,27 @@ useEffect(() => {
 
         <div className="px-25 flex justify-center">
 
-            <form className="mt-[-60px] flex flex-col justify-center items-center gap-12 rounded-6 w-full py-25 px-20 bg-very-light-gray dark:bg-very-dark-desaturated-blue caret-bright-blue shadow-md" 
-            action="" onSubmit={handleSubmit} >
+            <form className="mt-[-60px] flex flex-col justify-center items-center gap-12 rounded-6 w-full py-25 px-20 bg-very-light-gray dark:bg-very-dark-desaturated-blue caret-bright-blue shadow-md" onSubmit={handleSubmit} >
 
                 <input 
                 className="
                 w-full h-48 py-8 px-12 rounded-6 dark:text-light-grayish-blue-dark text-very-dark-grayish-blue text-13 bg-very-light-gray dark:bg-very-dark-desaturated-blue outline outline-1 outline-very-dark-grayish-blue-dark focus:shadow-sm focus:shadow-bright-blue" 
                 type="email" placeholder="Email address" name="email" value={loginInput.email} onChange={handleChangeInput}/>
 
+                {errors.email && (<p className="text-red-800 text-12 dark:text-red-500">{errors.email}</p>)}
+
                 <input className="w-full h-48 py-8 px-12 rounded-6 dark:text-light-grayish-blue-dark text-very-dark-grayish-blue text-13 bg-very-light-gray dark:bg-very-dark-desaturated-blue outline outline-1 outline-very-dark-grayish-blue-dark focus:shadow-sm focus:shadow-bright-blue" 
                 type="password" placeholder="Password" name="password" value={loginInput.password} onChange={handleChangeInput}/>
 
-                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login} disabled={!loginInput.email ||!loginInput.password}>Log in</button>
+                {errors.password && (<p className="text-red-800 text-12 dark:text-red-500">{errors.password}</p>)}
+
+                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login} disabled={errors.email ||errors.password}>Log in</button>
 
                 <p className="dark:text-light-grayish-blue text-very-dark-grayish-blue text-14 hover:cursor-pointer hover:underline decoration-bright-blue">Forgotten password?</p>
 
                 <div className="w-full m-8 outline outline-1 outline-dark-grayish-blue dark:outline-very-dark-grayish-blue-dark"></div>
 
-                <button className="text-light-grayish-blue text-14 w-4/6 h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300" type="submit" onClick={createNewUser} disabled={!loginInput.email ||!loginInput.password}>Create new account</button>
+                <button className="text-light-grayish-blue text-14 w-4/6 h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300" type="submit" onClick={createNewUser} disabled={errors.email ||errors.password}>Create new account</button>
 
                 {/* {isTaken && <p className="mt-10 text-red-800 text-12 dark:text-red-500">"That email is already in use."</p>}
 

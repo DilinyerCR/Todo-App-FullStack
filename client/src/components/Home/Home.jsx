@@ -1,21 +1,17 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import Header from '../Header/Header'
+import Main from '../Main/Main'
 
 
 const Home = () => {
-  const access = useSelector((state) => state.loginAccess)
 
-  const state = () => {
-    console.log(access)
-  }
 
+
+  //! ===Rendering===
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={state}>access status</button>
+      <Header/>
+      <Main/>
     </div>
-
-
   )
 }
 

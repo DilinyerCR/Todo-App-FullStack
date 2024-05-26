@@ -14,7 +14,7 @@ const deleteAllUsers = require("../controllers/deleteAllUsers");
 
 
 router.post('/signup', createUser);                //Funciona
-router.post('/addtask', addTask);                  //Funciona
+router.post('/mytasks/:userId/addtask', addTask);  //Funciona
 router.get('/mytasks/:userId', getTasksByUser);    //Funciona (despues de los ":" debe ir el nombre que colocaste en el controller, ejemplo: const { userId } = req.params; si colocas id en vez de userId, aqui debe ir id, ejemplo: router.get('/mytasks/:id', getTasksByUser);).
 
 //Cuando usamos params, es porque el valor llega por URL, en thuderclient en este caso la URL es esta: http://localhost:3001/home/mytasks/57c9544c-dd79-4464-82b3-e5616b1f4202 en donde "57c9544c-dd79-4464-82b3-e5616b1f4202" es el userId.
@@ -39,7 +39,7 @@ module.exports = router;
     //por body recibe: {"email": "Daniela@gmail.com","password": "daniela123"}
 
 // router.post('/addtask', addTask);
-    //ruta: http://localhost:3001/home/addtask
+    //ruta: http://localhost:3001/home/mytasks/47cbdba8-f9d9-4fe7-a388-d2fc955b2b38/addtask
     //por body recibe: {"userId": "d4bc3625-3f2d-4d81-8d98-50ad0b09d8e6","name": "Ir a patinar con amigos"}
 
 // router.get('/mytasks/:userId', getTasksByUser);
