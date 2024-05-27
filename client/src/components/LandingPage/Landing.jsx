@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Sun from "/assets/icon-sun.svg"
 import Moon from "/assets/icon-moon.svg"
-import { useDispatch, useSelector } from "react-redux"
 import { createUser, getAllUsers, loginUser } from "../../redux/actions"
 import validator from "./landingValidation"
 
 
 
 const Landing = () => {
+  //! Hooks
+    //useDispatch
+    const dispatch = useDispatch();
+
 
   //! Global States
     const created = useSelector((state) => state.userCreated)
     const isTaken = useSelector((state) => state.userTaken)
-    //useDispatch
-    const dispatch = useDispatch();
 
 
   //! Local States
@@ -99,7 +101,7 @@ const Landing = () => {
 
   //Funcion para prevenir que se recargue la pagina en los submits del form
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
   };
 
   //Funcion para logear, despacha el valor de los inputs a la action loginUser
@@ -109,7 +111,7 @@ const Landing = () => {
 
   //Funcion para crear nuevos usuarios, despacha el valor de los inputs a la action createUser
   const createNewUser = () => {
-    dispatch(createUser(loginInput.email, loginInput.password))
+    dispatch(createUser(loginInput.email, loginInput.password));
     setLoginInput({
       email: "",
       password: ""
@@ -119,11 +121,12 @@ const Landing = () => {
 
 
 
+
   //! ===Rendering===
   return (
     <div>
         <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between ">
-            <h1 className="font-bold text-25 text-white  tracking-12">WELCOME</h1>
+            <h1 className="font-bold text-25 text-white tracking-12">WELCOME</h1>
             <button className="h-30" onClick={handleChangeTheme}>
               <img src={theme === "light" ? Moon : Sun} alt="Sun" />
             </button>
@@ -145,17 +148,13 @@ const Landing = () => {
 
                 {errors.password && (<p className="text-red-800 text-12 dark:text-red-500">{errors.password}</p>)}
 
-                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login} disabled={errors.email ||errors.password}>Log in</button>
+                <button className="mt-10 text-light-grayish-blue text-14 w-full h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300 flex justify-center items-center" type="submit" onClick={login} disabled={errors.email ||errors.password} >Log in</button>
 
                 <p className="dark:text-light-grayish-blue text-very-dark-grayish-blue text-14 hover:cursor-pointer hover:underline decoration-bright-blue">Forgotten password?</p>
 
                 <div className="w-full m-8 outline outline-1 outline-dark-grayish-blue dark:outline-very-dark-grayish-blue-dark"></div>
 
                 <button className="text-light-grayish-blue text-14 w-4/6 h-48 bg-bright-blue rounded-6 hover:bg-bright-blue-hover transition-colors duration-300" type="submit" onClick={createNewUser} disabled={errors.email ||errors.password}>Create new account</button>
-
-                {/* {isTaken && <p className="mt-10 text-red-800 text-12 dark:text-red-500">"That email is already in use."</p>}
-
-                {created && <p className="mt-10 text-green-800 text-12 dark:text-green-500">"Congratulations, Your registration was successful."</p>} */}
 
                 {isTakenMessage && isTaken && <p className="mt-10 text-red-800 text-12 dark:text-red-500">"That email is already in use."</p>}
 

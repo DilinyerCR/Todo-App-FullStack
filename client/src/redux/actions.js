@@ -1,4 +1,4 @@
-import { GET_ALL_USERS, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
+import { ADD_TASK, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
 
 //Esta action realiza una solicitud GET a la API y despacha una acción para actualizar el estado global con la lista completa de usuarios obtenida de la respuesta.
 export const getAllUsers = () => {
@@ -34,7 +34,9 @@ export const loginUser = (email, password) => {
       if(foundUser) {
         dispatch({
           type: LOGIN_SUCCESS,
+          payload: foundUser.id
         })
+
       } else {
         dispatch({
           type: LOGIN_FAILURE,
@@ -49,7 +51,7 @@ export const loginUser = (email, password) => {
 };
 
 
-//Esta action verificar si un usuario existe en el estado global allUsers, Si no existe, crea uno nuevo enviando una solicitud POST a la API.
+//Esta action verifica si un usuario existe en el estado global allUsers, Si no existe, crea uno nuevo enviando una solicitud POST a la API.
 export const createUser = (email, password) => {
   return async (dispatch, getState) => {
     try {
@@ -84,3 +86,53 @@ export const createUser = (email, password) => {
     }
   };
 };
+
+
+//Esta action obtiene las tareas de un usuario específico, realiza una solicitud HTTP GET a la API para recuperar las tareas asociadas con un ID de usuario dado. Una vez obtenidas las tareas, las agrega al estado de la aplicación a través de la acción de tipo GET_TASKS_BY_USER
+export const getTasksByUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+        method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if(response.ok) {
+        const tasks = await response.json(); // Asegúrate de convertir la respuesta a JSON
+        dispatch({ type: GET_TASKS_BY_USER, payload: tasks }); // Agrega los datos de la respuesta como payload
+      }
+
+    } catch (error) {
+      console.error('Error getting tasks by user:', error);
+    }
+  }
+}
+
+
+// Action para agregar una nueva tarea a un usuario específico. Esta acción realiza una solicitud HTTP POST a la API para crear una nueva tarea asociada con un ID de usuario y un nombre de tarea proporcionados. Una vez creada la tarea, la respuesta de la API se agrega al estado de la aplicación a través de la acción de tipo ADD_TASK, permitiendo su visualización o manipulación en otras partes de la aplicación.
+export const addTask = (userId, name) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}/addtask`, {
+        method: 'POST', //Utiliza el método POST para enviar datos a la API
+        headers: {
+          'Content-Type': 'application/json', //Indica que el cuerpo de la solicitud será JSO
+        },
+        body: JSON.stringify(name), //Envía el nombre de la tarea como cuerpo de la solicitud
+      });
+
+      //Comprueba si la respuesta fue exitosa
+      if(response.ok) {
+        //Convierte la respuesta a JSON para procesarla
+        const task = await response.json(); // Asegúrate de convertir la respuesta a JSON
+        //Despacha la acción ADD_TASK con la tarea creada como payload
+        dispatch({ type: ADD_TASK, payload: task }); // Agrega los datos de la respuesta como payload
+      }
+
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
+  }
+}

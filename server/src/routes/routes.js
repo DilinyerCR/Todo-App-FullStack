@@ -11,6 +11,7 @@ const clearAllCompleted = require("../controllers/clearAllCompleted");
 const login = require("../controllers/login");
 const getAllUsers = require("../controllers/getAllUsers");
 const deleteAllUsers = require("../controllers/deleteAllUsers");
+const deleteAllTasks = require("../controllers/deleteAllTasks");
 
 
 router.post('/signup', createUser);                //Funciona
@@ -27,7 +28,10 @@ router.get('/mytasks/:userId/completed', filteredByCompleted); //Funciona
 router.delete('/mytasks/:userId/clearcompleted', clearAllCompleted); //Funciona
 router.get('/landing', login);                      //Funciona
 router.get('/allusers', getAllUsers)                //Funciona
+
 router.delete('/deleteallusers', deleteAllUsers)
+router.delete('/deletealltasks', deleteAllTasks)
+
 
 
 module.exports = router;
@@ -68,3 +72,6 @@ module.exports = router;
 
 // router.get('/allusers', getAllUsers)
     //ruta: http://localhost:3001/home/allusers
+
+// router.delete('/deletealltasks', deleteAllTasks)
+    //ruta: http://localhost:3001/home/deletealltasks
