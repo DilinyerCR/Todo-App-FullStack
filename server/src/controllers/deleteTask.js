@@ -2,7 +2,7 @@ const { Task } = require('../db');
 
 const deleteTasks = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
 
         const task = await Task.findByPk(id);
         task.destroy();
@@ -19,4 +19,4 @@ const deleteTasks = async (req, res) => {
 
 module.exports = deleteTasks;
 
-//Este controller se encarga de eliminar una task, obteniendo un ID por params.
+//Este controller se encarga de eliminar una task, obteniendo un ID por body.

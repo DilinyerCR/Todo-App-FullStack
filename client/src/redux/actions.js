@@ -1,4 +1,4 @@
-import { ADD_TASK, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
+import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
 
 //Esta action realiza una solicitud GET a la API y despacha una acción para actualizar el estado global con la lista completa de usuarios obtenida de la respuesta.
 export const getAllUsers = () => {
@@ -133,6 +133,98 @@ export const addTask = (userId, name) => {
 
     } catch (error) {
       console.error('Error adding task:', error);
+    }
+  }
+}
+
+
+//Action para actualizar el estado de "completed" de una tarea específica. Esta acción realiza una solicitud HTTP PUT a la API para modificar el estado de completado de una tarea asociada con un ID específico. Una vez que el estado de la tarea ha sido actualizado, la respuesta de la API se agrega al estado de la aplicación a través de la acción de tipo COMPLETED_TASK, permitiendo su visualización o manipulación actualizada en otras partes de la aplicación.
+export const completedTask = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/home/update`, {
+        method: 'PUT', //Utiliza el método PUT para actualizar datos en la API o DB.
+        headers: {
+          'Content-Type': 'application/json', //Indica que el cuerpo de la solicitud será JSON
+        },
+        body: JSON.stringify({id}), //Envía el ID de la task en forma de objeto, porque mi controller espera un objeto.
+      });
+
+      //Comprueba si la respuesta fue exitosa
+      if(response.ok) {
+        const completed = await response.json(); // Asegúrate de convertir la respuesta a JSON.
+        dispatch({ type: COMPLETED_TASK, payload: completed }); // Agrega los datos de la respuesta como payload.
+      }
+
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
+  }
+}
+
+
+// Action para eliminar todas las tareas completadas asociadas a un usuario específico. Esta acción realiza dos solicitudes HTTP: primero, una solicitud DELETE a la API para eliminar todas las tareas marcadas como completadas del usuario especificado; luego, una solicitud GET para obtener las tareas actualizadas del usuario, reflejando la eliminación de las tareas completadas. Una vez que las tareas actualizadas han sido obtenidas, la respuesta de la API se agrega al estado de la aplicación a través de la acción de tipo CLEAR_ALL_COMPLETED, permitiendo su visualización o manipulación actualizada en otras partes de la aplicación.
+export const clearAllCompleted = (userId) => {
+  return async (dispatch) => {
+    try {
+      //? Primera solicitud HTTP para eliminar todas las tareas completadas del usuario especificado
+      await fetch(`http://localhost:3001/home/mytasks/${userId}/clearcompleted`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      //? Segunda solicitud HTTP para obtener las tareas actualizadas del usuario, excluyendo las tareas completadas recién eliminadas
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if(response.ok) {
+        const updatedTasks = await response.json();
+        // Agrega los datos de las tareas actualizadas al estado de la aplicación mediante el payload
+        dispatch({ type: CLEAR_ALL_COMPLETED, payload: updatedTasks });
+      }
+      
+    } catch (error) {
+      console.error('Error getting NO completed tasks:', error);
+    }
+  }
+}
+
+
+// Action para eliminar una tarea asociada a un usuario específico. Esta acción realiza dos solicitudes HTTP: primero, una solicitud DELETE a la API para eliminar una las tarea del usuario especificado; luego, una solicitud GET para obtener las tareas actualizadas del usuario, reflejando la eliminación de la tarea. Una vez que las tareas actualizadas han sido obtenidas, la respuesta de la API se agrega al estado de la aplicación a través de la acción de tipo CLOSE_TASK, permitiendo su visualización o manipulación actualizada en otras partes de la aplicación.
+export const closeTask = (id, userId) => {
+  return async (dispatch) => {
+    try {
+      //? Primera solicitud HTTP para eliminar una tarea del usuario especificado
+      await fetch(`http://localhost:3001/home/deletetask`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id}), //Envía el ID de la task en forma de objeto, porque mi controller espera un objeto.
+      });
+
+      //? Segunda solicitud HTTP para obtener las tareas actualizadas del usuario, excluyendo la tarea recién eliminada
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if(response.ok) {
+        const updatedTasks = await response.json();
+        // Agrega los datos de las tareas actualizadas al estado de la aplicación mediante el payload
+        dispatch({ type: CLOSE_TASK, payload: updatedTasks });
+      }
+      
+    } catch (error) {
+      console.error('Error getting NO completed tasks:', error);
     }
   }
 }

@@ -20,8 +20,8 @@ router.get('/mytasks/:userId', getTasksByUser);    //Funciona (despues de los ":
 
 //Cuando usamos params, es porque el valor llega por URL, en thuderclient en este caso la URL es esta: http://localhost:3001/home/mytasks/57c9544c-dd79-4464-82b3-e5616b1f4202 en donde "57c9544c-dd79-4464-82b3-e5616b1f4202" es el userId.
 
-router.delete('/delete/:id', deleteTasks);         //Funciona (no se como debe ser la URL del lado del front)
-router.put('/update/:id', completedTask);          //Funciona (no se como debe ser la URL del lado del front)
+router.delete('/deletetask', deleteTasks);         //Funciona (no se como debe ser la URL del lado del front)
+router.put('/update', completedTask);          //Funciona (no se como debe ser la URL del lado del front)
 router.get('/alltasks', filteredByAll);            //Funciona
 router.get('/mytasks/:userId/actives', filteredByActive); //Funciona
 router.get('/mytasks/:userId/completed', filteredByCompleted); //Funciona
@@ -50,10 +50,10 @@ module.exports = router;
     //ruta: http://localhost:3001/home/mytasks/e8df59f3-852a-4b46-aa41-93a1b0a75be5
 
 // router.delete('/delete/:id', deleteTasks);
-    //ruta: http://localhost:3001/home/delete/2
+    //ruta: http://localhost:3001/home/deletetask
 
 // router.put('/update/:id', completedTask); 
-    //ruta: http://localhost:3001/home/update/1
+    //ruta: http://localhost:3001/home/update
 
 // router.get('/alltasks', filteredByAll);
     //ruta: http://localhost:3001/home/alltasks

@@ -20,7 +20,6 @@ const clearAllCompleted = async (req, res) => {
         if(!completeTasks) {
             return res.status(404).json({ message: 'No hay tareas que eliminar' });
         }
-
         // res.status(200).json({ message: `Se eliminaron ${completeTasks} tareas completadas.` });
         res.status(200).json(completeTasks);
 

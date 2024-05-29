@@ -14,6 +14,9 @@ export default {
         'bright-blue': 'hsl(220, 98%, 61%)',
         'bright-blue-hover': 'hsl(220, 98%, 58%)',
         'check-background': 'linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
+        //? LINEAR GRADIENT COLORS:
+        'custom-blue': 'hsl(192, 100%, 67%)',
+        'custom-purple': 'hsl(280, 87%, 65%)',
 
         //! Tonos neutros - Tema claro
         'very-light-gray': 'hsl(0, 0%, 98%)',                  //Form bg

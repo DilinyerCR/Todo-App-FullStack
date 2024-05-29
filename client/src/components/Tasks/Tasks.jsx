@@ -17,6 +17,7 @@ const Tasks = () => {
             key={task.id} //Si no le pongo key, React se molesta
             name={task.name}
             completed={task.completed}
+            id={task.id}
             />
           })
         }

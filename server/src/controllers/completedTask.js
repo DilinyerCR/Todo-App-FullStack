@@ -2,7 +2,7 @@ const { Task } = require('../db');
 
 const completedTask = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
 
         const task = await Task.findByPk(id);
 
@@ -19,4 +19,4 @@ const completedTask = async (req, res) => {
 
 module.exports = completedTask;
 
-//Este controller se encarga de tomar el id por params de una task, accede a su propiedad "completed" y cambia su valor de true a false y de false a true.
+//Este controller se encarga de tomar el id por body de una task, accede a su propiedad "completed" y cambia su valor de true a false y de false a true.
