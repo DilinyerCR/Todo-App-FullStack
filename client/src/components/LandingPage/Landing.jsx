@@ -121,20 +121,19 @@ const Landing = () => {
 
 
 
-
   //! ===Rendering===
   return (
     <div>
-        <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between ">
-            <h1 className="font-bold text-25 text-white tracking-12">WELCOME</h1>
+        <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between lg:bg-desktop-light lg:dark:bg-desktop-dark md:px-140 lg:px-300 xl:px-400 lg:h-300 lg:py-70">
+            <h1 className="font-bold text-25 text-white tracking-12 lg:text-35">WELCOME</h1>
             <button className="h-30" onClick={handleChangeTheme}>
-              <img src={theme === "light" ? Moon : Sun} alt="Sun" />
+              <img className="lg:h-34" src={theme === "light" ? Moon : Sun} alt="Sun" />
             </button>
         </div>
 
-        <div className="px-25 flex justify-center">
+        <div className="px-25 flex justify-center md:px-140 lg:px-300 xl:px-400">
 
-            <form className="mt-[-60px] flex flex-col justify-center items-center gap-12 rounded-6 w-full py-25 px-20 bg-very-light-gray dark:bg-very-dark-desaturated-blue caret-bright-blue shadow-md" onSubmit={handleSubmit} >
+            <form className="mt-[-60px] flex flex-col justify-center items-center gap-12 rounded-6 w-full py-25 px-20 bg-very-light-gray dark:bg-very-dark-desaturated-blue caret-bright-blue shadow-md lg:mt-[-130px] xl:py-35 xl:px-35" onSubmit={handleSubmit} >
 
                 <input 
                 className="

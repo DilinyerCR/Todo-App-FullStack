@@ -1,4 +1,4 @@
-import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
+import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_ACTIVES, FILTERED_BY_COMPLETED, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
 
 //Esta action realiza una solicitud GET a la API y despacha una acción para actualizar el estado global con la lista completa de usuarios obtenida de la respuesta.
 export const getAllUsers = () => {
@@ -226,5 +226,65 @@ export const closeTask = (id, userId) => {
     } catch (error) {
       console.error('Error getting NO completed tasks:', error);
     }
+  }
+}
+
+
+//Esta acción realiza una solicitud HTTP GET a la API para obtener todas las tareas del usuario especificado. Luego, filtra las tareas para incluir solo aquellas cuya propiedad "completed" es true, la respuesta se agrega al estado de la aplicación a través de la acción de tipo FILTERED_BY_COMPLETED, permitiendo su visualización o manipulación actualizada en otras partes de la aplicación.
+export const filterByCompleted = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+        method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if(response.ok) {
+        const allTasks = await response.json();
+        // Filtrando las tareas que tienen la propiedad "completed" en true
+        const completedTasks = allTasks.filter(task => task.completed === true);
+
+        dispatch({ type: FILTERED_BY_COMPLETED, payload: completedTasks });
+      }
+      
+    } catch (error) {
+      console.error('Error getting NO completed tasks:', error);
+    }
+  }
+}
+
+
+//Esta acción realiza una solicitud HTTP GET a la API para obtener todas las tareas del usuario especificado. Luego, filtra las tareas para incluir solo aquellas cuya propiedad "completed" es false, la respuesta se agrega al estado de la aplicación a través de la acción de tipo FILTERED_BY_ACTIVES, permitiendo su visualización o manipulación actualizada en otras partes de la aplicación.
+export const filterByActives = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+        method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if(response.ok) {
+        const allTasks = await response.json();
+        // Filtrando las tareas que tienen la propiedad "completed" en false
+        const activesTasks = allTasks.filter(task => task.completed === false);
+
+        dispatch({ type: FILTERED_BY_ACTIVES, payload: activesTasks });
+      }
+
+    } catch (error) {
+      console.error('Error getting NO completed tasks:', error);
+    }
+  }
+}
+
+//Esta action despacha el valor false para luego cambiar el estado global "loginAccess" en mi reducer a false.
+export const logout = (value) => {
+  return (dispatch) => {
+    dispatch({ type: LOGOUT, payload: value });
+    console.log(value)
   }
 }

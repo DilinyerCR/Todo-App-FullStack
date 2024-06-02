@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import { getTasksByUser } from '../../redux/actions';
+import Logout from '../Logout/Logout';
 
 
 
@@ -28,6 +29,7 @@ const Home = () => {
     <div>
       <Header/>
       <Main/>
+      <Logout/>
     </div>
   )
 }

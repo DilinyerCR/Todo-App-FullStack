@@ -3,6 +3,7 @@ import Sun from "/assets/icon-sun.svg"
 import Moon from "/assets/icon-moon.svg"
 
 
+
 const Header = () => {
     //! Local States
     //Estado local para cambiar el tema
@@ -12,7 +13,7 @@ const Header = () => {
           return "dark";
         }
         return  "light";
-      }); 
+    }); 
 
 
     //! useEffects
@@ -35,10 +36,10 @@ const Header = () => {
     //! ===Rendering===
     return (
         <div>
-            <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between ">
-                <h1 className="font-bold text-25 text-white  tracking-12">TODO</h1>
+            <div className="bg-center bg-cover bg-no-repeat bg-mobile-light dark:bg-mobile-dark h-200 py-45 px-25 flex justify-between lg:bg-desktop-light lg:dark:bg-desktop-dark md:px-140 lg:px-300 xl:px-400 lg:h-300 lg:py-70">
+                <h1 className="font-bold text-25 text-white tracking-12 lg:text-36">TODO</h1>
                 <button className="h-30" onClick={handleChangeTheme}>
-                <img src={theme === "light" ? Moon : Sun} alt="Sun" />
+                <img className='lg:w-35' src={theme === "light" ? Moon : Sun} alt="Sun" />
                 </button>
             </div>
         </div>

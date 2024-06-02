@@ -38,7 +38,9 @@ export default {
       // que establece una imagen de fondo para dispositivos móviles
       backgroundImage: theme => ({
         'mobile-dark': "url('../../assets/bg-mobile-dark.jpg')",
-        'mobile-light': "url('../../assets/bg-mobile-light.jpg')" //No se porque pero esta debe ser la ruta, y al parecer la carpeta assets debe estar dentro de la carpeta public para que funcione.
+        'mobile-light': "url('../../assets/bg-mobile-light.jpg')", //No se porque pero esta debe ser la ruta, y al parecer la carpeta assets debe estar dentro de la carpeta public para que funcione.
+        'desktop-light': "url('../../assets/bg-desktop-light.jpg')",
+        'desktop-dark': "url('../../assets/bg-desktop-dark.jpg')",
       }),
       spacing: {
         '-40': '-40px', // Margen negativo personalizado, esto me permite usar margenes negavitos, al parecer puedo colocar cualquier valor y funciona!
@@ -47,6 +49,9 @@ export default {
       padding: generatePixel(),
       width: generatePixel(),
       height: generatePixel(),
+      minHeight: generatePixel(),
+      minWidth: generatePixel(),
+      maxWidth: generatePixel(),
       fontSize: generatePixel(),
       letterSpacing: generatePixel(),
       borderColor: generatePixel(),
@@ -54,6 +59,12 @@ export default {
       gap: generatePixel(),
       fontFamily: {
         'josefin-sans': ['Josefin Sans', 'sans-serif'],
+      },
+      screens: {
+        'md': '768px',
+        'lg': '1080px',
+        'xl': '1360px',
+        '2xl': '1440px',
       },
     },
   },

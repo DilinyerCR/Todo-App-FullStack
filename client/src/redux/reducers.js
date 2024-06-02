@@ -1,4 +1,4 @@
-import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
+import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_ACTIVES, FILTERED_BY_COMPLETED, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
 
 const initialState = {
     allUsers: [],
@@ -82,6 +82,24 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasksByUser: action.payload // Utiliza el array de tareas devuelto por la acción para actualizar tasksByUser con las nuevas tareas actualizadas (sin la tarea que cerre)
+            }
+
+        case FILTERED_BY_COMPLETED:
+            return {
+                ...state,
+                tasksByUser: action.payload
+            }
+
+        case FILTERED_BY_ACTIVES:
+            return {
+                ...state,
+                tasksByUser: action.payload
+            }
+        
+        case LOGOUT: 
+            return {
+                ...state,
+                loginAccess: action.payload //El payload es igual a "false"
             }
 
         default:
