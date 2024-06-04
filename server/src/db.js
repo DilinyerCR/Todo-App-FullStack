@@ -6,7 +6,7 @@ const taskModel = require('./models/Task'); //Importo el modelo para las tareas.
 const userModel = require('./models/User'); //Importo el modelo para los usuarios.
 
 // Creamos una nueva instancia de Sequelize, que se utilizará para interactuar con la base de datos.
-const database = new Sequelize((`psql "postgres://default:${DEFAULT}@ep-dry-bonus-a4vvclsb.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"`), {
+const database = new Sequelize((`postgres://default:${DEFAULT}@ep-dry-bonus-a4vvclsb.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require`), {
     //Esta es la cadena de conexión a tu base de datos. Indica que estás utilizando PostgreSQL (postgres://),con el usuario DB_USER, la contraseña DB_PASSWORD, en el host DB_HOST, en el puerto 5432, y la base de datos se llama todoapp.
     logging: false , native: false
 });
