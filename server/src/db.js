@@ -2,13 +2,14 @@
 const pg = require('pg');
 require("dotenv").config();
 const { Sequelize } = require('sequelize');
-const { DEFAULT } = process.env; //Llamo a mis variables de entorno.
+const { POSTGRES_PASSWORD } = process.env; //Llamo a mis variables de entorno.
 const taskModel = require('./models/Task'); //Importo el modelo para las tareas.
 const userModel = require('./models/User'); //Importo el modelo para los usuarios.
 
 // Creamos una nueva instancia de Sequelize, que se utilizará para interactuar con la base de datos.
-const database = new Sequelize((`postgres://default:${DEFAULT}@ep-dry-bonus-a4vvclsb.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require`), {
+const database = new Sequelize((`postgres://default:${POSTGRES_PASSWORD}@ep-dry-bonus-a4vvclsb.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require`), {
     //Esta es la cadena de conexión a tu base de datos. Indica que estás utilizando PostgreSQL (postgres://),con el usuario DB_USER, la contraseña DB_PASSWORD, en el host DB_HOST, en el puerto 5432, y la base de datos se llama todoapp.
+    host: "ep-dry-bonus-a4vvclsb-pooler.us-east-1.aws.neon.tech",
     dialectModule: pg,
     dialect: 'postgres',
     pool: {
