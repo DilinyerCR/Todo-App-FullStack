@@ -1,7 +1,7 @@
 // El archivo db.js es esencial en una aplicación que utiliza Sequelize para interactuar con una base de datos, ya que se encarga de establecer la conexión con la base de datos y de configurar Sequelize. Este archivo es crucial para la inicialización de la base de datos y la definición de los modelos que representan las tablas en la base de datos. 
-require("dotenv").config();
+// require("dotenv").config();
 const { Sequelize } = require('sequelize');
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env; //Llamo a mis variables de entorno.
+// const { DB_USER, DB_PASSWORD, DB_HOST } = process.env; //Llamo a mis variables de entorno.
 const taskModel = require('./models/Task'); //Importo el modelo para las tareas.
 const userModel = require('./models/User'); //Importo el modelo para los usuarios.
 
