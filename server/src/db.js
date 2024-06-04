@@ -7,9 +7,9 @@ const taskModel = require('./models/Task'); //Importo el modelo para las tareas.
 const userModel = require('./models/User'); //Importo el modelo para los usuarios.
 
 // Creamos una nueva instancia de Sequelize, que se utilizará para interactuar con la base de datos.
-const connectionString = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/verceldb?sslmode=require`;
+const URL = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/verceldb?sslmode=require`;
 
-const database = new Sequelize(connectionString, {
+const database = new Sequelize(URL, {
     logging: false,
     native: false,
     dialectModule: pg,
