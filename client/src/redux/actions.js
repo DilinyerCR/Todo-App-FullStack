@@ -4,7 +4,7 @@ import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3001/home/allusers', {
+      const response = await fetch('https://todo-app-cr-backend.up.railway.app/home/allusers', {
         method: 'GET', //GET solicita informacion de una ruta, en este caso http://localhost:3001/home/allusers
         headers: {
           'Content-Type': 'application/json',
@@ -13,6 +13,8 @@ export const getAllUsers = () => {
 
       if(response.ok) {
         const users = await response.json(); // Asegúrate de convertir la respuesta a JSON
+        console.log(users);
+
         dispatch({ type: GET_ALL_USERS, payload: users }); // Agrega los datos de la respuesta como payload
       }
 
@@ -63,7 +65,7 @@ export const createUser = (email, password) => {
           });
         } else {
           const newUser = { email, password };
-          const response = await fetch('http://localhost:3001/home/signup', {
+          const response = await fetch('https://todo-app-cr-backend.up.railway.app/home/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -92,7 +94,7 @@ export const createUser = (email, password) => {
 export const getTasksByUser = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}`, {
         method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +117,7 @@ export const getTasksByUser = (userId) => {
 export const addTask = (userId, name) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}/addtask`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}/addtask`, {
         method: 'POST', //Utiliza el método POST para enviar datos a la API
         headers: {
           'Content-Type': 'application/json', //Indica que el cuerpo de la solicitud será JSO
@@ -142,7 +144,7 @@ export const addTask = (userId, name) => {
 export const completedTask = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/home/update`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/update`, {
         method: 'PUT', //Utiliza el método PUT para actualizar datos en la API o DB.
         headers: {
           'Content-Type': 'application/json', //Indica que el cuerpo de la solicitud será JSON
@@ -168,7 +170,7 @@ export const clearAllCompleted = (userId) => {
   return async (dispatch) => {
     try {
       //? Primera solicitud HTTP para eliminar todas las tareas completadas del usuario especificado
-      await fetch(`http://localhost:3001/home/mytasks/${userId}/clearcompleted`, {
+      await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}/clearcompleted`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +178,7 @@ export const clearAllCompleted = (userId) => {
       });
 
       //? Segunda solicitud HTTP para obtener las tareas actualizadas del usuario, excluyendo las tareas completadas recién eliminadas
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +203,7 @@ export const closeTask = (id, userId) => {
   return async (dispatch) => {
     try {
       //? Primera solicitud HTTP para eliminar una tarea del usuario especificado
-      await fetch(`http://localhost:3001/home/deletetask`, {
+      await fetch(`https://todo-app-cr-backend.up.railway.app/home/deletetask`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -210,7 +212,7 @@ export const closeTask = (id, userId) => {
       });
 
       //? Segunda solicitud HTTP para obtener las tareas actualizadas del usuario, excluyendo la tarea recién eliminada
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -234,7 +236,7 @@ export const closeTask = (id, userId) => {
 export const filterByCompleted = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}`, {
         method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
         headers: {
           'Content-Type': 'application/json',
@@ -260,7 +262,7 @@ export const filterByCompleted = (userId) => {
 export const filterByActives = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/home/mytasks/${userId}`, {
+      const response = await fetch(`https://todo-app-cr-backend.up.railway.app/home/mytasks/${userId}`, {
         method: 'GET', //GET solicita informacion de una ruta, en este caso `http://localhost:3001/home/mytasks/${userId}`
         headers: {
           'Content-Type': 'application/json',
