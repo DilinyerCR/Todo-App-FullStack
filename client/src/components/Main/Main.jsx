@@ -140,7 +140,7 @@ const Main = () => {
 
             </div>
 
-            <div className='mt-40 text-center text-dark-grayish-blue dark:text-dark-grayish-blue-dark text-13'>
+            <div className='mt-40 text-center text-dark-grayish-blue dark:text-dark-grayish-blue-dark text-13 lg:text-15'>
                 <p>Drag and drop to reorder list</p>
             </div>
         </div>
