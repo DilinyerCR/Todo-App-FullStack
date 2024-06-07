@@ -4,7 +4,7 @@ import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch('//todo-app-full-stack-mauve.vercel.app/allusers', {
+      const response = await fetch('https://todo-app-full-stack-mauve.vercel.app/allusers', {
         method: 'GET', //GET solicita informacion de una ruta, en este caso http://localhost:3001/home/allusers
         headers: {
           'Content-Type': 'application/json',
