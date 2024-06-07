@@ -4,7 +4,7 @@ import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3001/allusers', {
+      const response = await fetch('http://localhost:3001/home/allusers', {
         method: 'GET', //GET solicita informacion de una ruta, en este caso http://localhost:3001/home/allusers
         headers: {
           'Content-Type': 'application/json',
@@ -13,7 +13,6 @@ export const getAllUsers = () => {
 
       if(response.ok) {
         const users = await response.json(); // Asegúrate de convertir la respuesta a JSON
-        console.log(users);
 
         dispatch({ type: GET_ALL_USERS, payload: users }); // Agrega los datos de la respuesta como payload
       }
@@ -287,6 +286,5 @@ export const filterByActives = (userId) => {
 export const logout = (value) => {
   return (dispatch) => {
     dispatch({ type: LOGOUT, payload: value });
-    console.log(value)
   }
 }
