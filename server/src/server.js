@@ -12,7 +12,7 @@ const router = require('./routes/routes');
 
 //Esto se le conoce como CORS, sin esto no se comunican el front y el back
 server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://todo-app-full-stack-mauve.vercel.app');
+    res.header('Access-Control-Allow-Origin', 'https://todo-app-full-stack-mauve.vercel.app/');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header(
        'Access-Control-Allow-Headers',
@@ -31,7 +31,7 @@ server.use(morgan('dev'));  //Middleware
 
 // Monta el router en la ruta '/home'. Esto significa que todas las rutas definidas en el módulo 'router' estarán accesibles bajo el prefijo '/home'
 // Por ejemplo, si tienes una ruta definida como '/' en tu módulo de rutas, será accesible como '/home/' en tu aplicación
-server.use('/home', router);
+server.use('/', router);
 
 //Exporto mi server para cuando quiera inicializarlo en otro archivo, como 'index.js' o 'app.js'
 module.exports = server;
