@@ -57,6 +57,7 @@ export const createUser = (email, password) => {
   return async (dispatch, getState) => {
     try {
       const { allUsers } = getState();
+      //Verifica si existe y si no, lo crea
       const foundUser = await allUsers.find(user => user.email === email);
         if (foundUser) {
           dispatch({

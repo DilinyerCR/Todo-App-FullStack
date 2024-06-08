@@ -57,7 +57,10 @@ const Landing = () => {
   //useEffect para ejecutar getAllUsers cuando el componente se monta
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [dispatch]);
+    if(created) {
+      dispatch(getAllUsers());
+    }
+  }, [created]);
 
   //useEffect para controlar la visibilidad de isTaken durante 5 segundos
     useEffect(() => {
