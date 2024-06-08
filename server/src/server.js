@@ -9,21 +9,33 @@ const morgan = require("morgan");
 
 // Importa el módulo de rutas definidas en './routes/routes'. Este módulo contiene las definiciones de las rutas de tu aplicación
 const router = require('./routes/routes');
+const cors = require('cors');
+
+// Configura CORS
+const corsOptions = {
+   origin: 'https://todo-app-full-stack-mauve.vercel.app', // Origen permitido
+   optionsSuccessStatus: 200, // Algunos navegadores requieren este encabezado
+   credentials: true, // Permite cookies y autenticación
+   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'], // Métodos permitidos
+   allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
+};
+
+server.use(cors(corsOptions)); // Aplica la política CORS
 
 //Esto se le conoce como CORS, sin esto no se comunican el front y el back
-server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://todo-app-full-stack-mauve.vercel.app');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header(
-       'Access-Control-Allow-Headers',
-       'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    res.header(
-       'Access-Control-Allow-Methods',
-       'GET, POST, OPTIONS, PUT, DELETE'
-    );
-    next();
-});
+// server.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://todo-app-full-stack-mauve.vercel.app');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header(
+//        'Access-Control-Allow-Headers',
+//        'Origin, X-Requested-With, Content-Type, Accept'
+//     );
+//     res.header(
+//        'Access-Control-Allow-Methods',
+//        'GET, POST, OPTIONS, PUT, DELETE'
+//     );
+//     next();
+// });
 
 //Esto es un middleware, se debe usar si o si para poder usar el metodo post, porque la informacion viaja en .json y el backend no lo entiende a menos que se use ese middleware
 server.use(express.json());    //Middleware
