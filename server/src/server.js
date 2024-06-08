@@ -12,7 +12,7 @@ const router = require('./routes/routes');
 
 // Manejador de rutas catch-all para servir el frontend
 server.get('*', (req, res) => {
-   res.sendFile(path.resolve(__dirname, '/client/index.html'));
+   res.sendFile(path.resolve(__dirname, '../../client/index.html'));
 });
 
 //Esto se le conoce como CORS, sin esto no se comunican el front y el back
