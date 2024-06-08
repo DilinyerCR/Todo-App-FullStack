@@ -90,7 +90,7 @@ const Main = () => {
 
     //! ===Rendering===
     return (
-        <div className="px-25 md:px-140 lg:px-300 xl:px-400">
+        <div className="px-25 md:px-140 lg:px-300 xl:px-410">
             
             <div className="mt-[-90px] lg:mt-[-130px]">
                 <div>
@@ -130,11 +130,11 @@ const Main = () => {
                 <div className='mt-18 h-48 bg-very-light-gray rounded-6 flex items-center justify-center gap-20 text-14 font-semibold 
                 text-dark-grayish-blue dark:text-dark-grayish-blue-dark dark:bg-very-dark-desaturated-blue md:hidden'>
 
-                    <button className={`hover:text-very-dark-grayish-blue  ${allButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'}`} onClick={handleAllTasks}>All</button>
+                    <button className={`hover:text-very-dark-grayish-blue  ${allButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'} focus:text-bright-blue`} onClick={handleAllTasks}>All</button>
 
-                    <button className={`hover:text-very-dark-grayish-blue  ${completedButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'}`} onClick={handleActivesTasks}>Active</button>
+                    <button className={`hover:text-very-dark-grayish-blue  ${completedButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'} focus:text-bright-blue`} onClick={handleActivesTasks}>Active</button>
 
-                    <button className={`hover:text-very-dark-grayish-blue  ${activeButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'}`} onClick={handleCompletedTasks}>Completed</button>
+                    <button className={`hover:text-very-dark-grayish-blue  ${activeButton ? 'text-bright-blue' : 'dark:hover:text-light-grayish-blue'} focus:text-bright-blue`} onClick={handleCompletedTasks}>Completed</button>
                 </div>
                 {/* Este div de arriba se muestra solo en mobile */}
 

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions";
-import logoutIcon from "/assets/power-off.png"
+import logoutIcon from "/assets/power-off-red.png"
 
 
 
@@ -24,8 +24,8 @@ const Logout = () => {
 
     //! ===Rendering===
     return (
-        <div className="m-40 flex justify-center text-red-600">
-            <button className="w-40" onClick={powerOff}>
+        <div className="m-40 flex justify-center">
+            <button className="w-48" onClick={powerOff}>
                 <img src={logoutIcon} alt="powerOff" />
             </button>
         </div>
