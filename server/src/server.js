@@ -1,5 +1,5 @@
 // El archivo server.js es el punto de entrada principal de una aplicación Express.js y es responsable de configurar y ejecutar el servidor web. Este archivo es crucial para iniciar la aplicación y manejar las solicitudes HTTP que llegan a la aplicación.
-
+const path = require('path');
 // Importa el módulo Express, que es un framework para aplicaciones web en Node.js
 const express = require("express");
 
@@ -9,6 +9,11 @@ const morgan = require("morgan");
 
 // Importa el módulo de rutas definidas en './routes/routes'. Este módulo contiene las definiciones de las rutas de tu aplicación
 const router = require('./routes/routes');
+
+// Manejador de rutas catch-all para servir el frontend
+server.get('*', (req, res) => {
+   res.sendFile(path.resolve(__dirname, '/client/index.html'));
+});
 
 //Esto se le conoce como CORS, sin esto no se comunican el front y el back
 server.use((req, res, next) => {
