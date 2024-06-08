@@ -10,7 +10,6 @@ const morgan = require("morgan");
 // Importa el módulo de rutas definidas en './routes/routes'. Este módulo contiene las definiciones de las rutas de tu aplicación
 const router = require('./routes/routes');
 
-
 //Esto se le conoce como CORS, sin esto no se comunican el front y el back
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://todo-app-cr.vercel.app');
