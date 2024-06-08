@@ -1,10 +1,12 @@
 import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_ACTIVES, FILTERED_BY_COMPLETED, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
 
+const URL = "https://todo-app-cr.vercel.app"
+
 //Esta action realiza una solicitud GET a la API y despacha una acción para actualizar el estado global con la lista completa de usuarios obtenida de la respuesta.
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch('https://todo-app-fullstack-production.up.railway.app/home/allusers', {
+      const response = await fetch(`${URL}/home/allusers`, {
         method: 'GET', //GET solicita informacion de una ruta, en este caso http://localhost:3001/home/allusers
         headers: {
           'Content-Type': 'application/json',
