@@ -57,7 +57,7 @@ const Landing = () => {
   //UseEffect para denegar el acceso a las rutas si access es false, si es true redirige a "/home"
   useEffect(() => {
     if(!access) {
-      navigate("https://todo-app-cr.vercel.app")
+      navigate("/")
     } else {
       navigate(`/home/${userId}`) //Si el usuario inicia sesion, es llevado a home/ y aqui muestra el id de ese user
     }
