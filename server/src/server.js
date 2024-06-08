@@ -29,7 +29,7 @@ server.use((req, res, next) => {
 
 // Manejador de rutas catch-all para servir el frontend
 server.get('*', (req, res) => {
-   res.sendFile(path.resolve(__dirname, '../../client/index.html'));
+   res.sendFile(path.resolve(__dirname, '/client/index.html'));
 });
 
 //Esto es un middleware, se debe usar si o si para poder usar el metodo post, porque la informacion viaja en .json y el backend no lo entiende a menos que se use ese middleware
