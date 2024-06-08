@@ -1,5 +1,5 @@
 // El archivo server.js es el punto de entrada principal de una aplicación Express.js y es responsable de configurar y ejecutar el servidor web. Este archivo es crucial para iniciar la aplicación y manejar las solicitudes HTTP que llegan a la aplicación.
-// const path = require('path');
+const path = require('path');
 // Importa el módulo Express, que es un framework para aplicaciones web en Node.js
 const express = require("express");
 
@@ -27,10 +27,10 @@ server.use((req, res, next) => {
     next();
 });
 
-// // Manejador de rutas catch-all para servir el frontend
-// server.get('*', (req, res) => {
-//    res.sendFile(path.resolve(__dirname, '../../client/index.html'));
-// });
+// Manejador de rutas catch-all para servir el frontend
+server.get('*', (req, res) => {
+   res.sendFile(path.resolve(__dirname, '../../client/index.html'));
+});
 
 //Esto es un middleware, se debe usar si o si para poder usar el metodo post, porque la informacion viaja en .json y el backend no lo entiende a menos que se use ese middleware
 server.use(express.json());    //Middleware
