@@ -4,29 +4,38 @@ import Sun from "/assets/icon-sun.svg"
 import Moon from "/assets/icon-moon.svg"
 import { createUser, getAllUsers, loginUser } from "../../redux/actions"
 import validator from "./landingValidation"
+import { useNavigate } from "react-router-dom"
 
 
 
 const Landing = () => {
   //! Hooks
-    //useDispatch
-    const dispatch = useDispatch();
+  //useDispatch
+  const dispatch = useDispatch();
+  //useNavigate
+  const navigate = useNavigate(); //useNavigate te ayuda a controlar la navegación en tu aplicación React de manera programática, lo que significa que puedes decidir cuándo y dónde llevar al usuario sin depender de su interacción con el navegador (como hacer clic en un enlace).
 
 
   //! Global States
-    const created = useSelector((state) => state.userCreated)
-    const isTaken = useSelector((state) => state.userTaken)
+  //Estado global para saber si el usuario existe o no
+  const access = useSelector((state) => state.loginAccess)
+  //Estado blobal que almacena el userId del usuario que inicio sesion
+  const userId = useSelector((state) => state.userId)
+  //Estado global para saber si el usuario fue creado con exito
+  const created = useSelector((state) => state.userCreated)
+  //Estado global para saber si el usuario ya existe
+  const isTaken = useSelector((state) => state.userTaken)
 
 
   //! Local States
-    //Estado local para cambiar el tema
-    const [ theme, setTheme ] = useState(() => {
-      //Esto es para cambiar el tema segun el tema de tu S.O
-      if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
+  //Estado local para cambiar el tema
+  const [ theme, setTheme ] = useState(() => {
+    //Esto es para cambiar el tema segun el tema de tu S.O
+    if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
       return  "light";
-    }); 
+  }); 
 
   //Estado local para almacenar lo que se escriba el los 2 inputs del form
   const [ loginInput, setLoginInput ] = useState({
@@ -45,6 +54,16 @@ const Landing = () => {
 
 
   //! useEffects
+  //UseEffect para denegar el acceso a las rutas si access es false, si es true redirige a "/home"
+  useEffect(() => {
+    if(!access) {
+      navigate("/")
+    } else {
+      navigate(`/home/${userId}`) //Si el usuario inicia sesion, es llevado a home/ y aqui muestra el id de ese user
+    }
+  }, [access, navigate])
+
+
   //useEffect para cambiar el tema
   useEffect(() => {
     if(theme === "dark") {
