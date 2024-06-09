@@ -3,6 +3,8 @@ import { closeTask, completedTask } from "../../redux/actions";
 import checkIcon from "/assets/icon-check.svg";
 import crossIcon from "/assets/icon-cross.svg"
 import { useParams } from "react-router-dom";
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
 
 
@@ -22,12 +24,24 @@ const Task = ({name, completed, id}) => { //El name viene del componente Tasks
   const handleCloseTask = () => {
     dispatch(closeTask(id, userId))
   }
+
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({id: id})
   
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  }
 
 
+  
   //! ===Rendering===
   return (
-    <div className="text-very-dark-grayish-blue dark:text-light-grayish-blue-dark">
+    <div className="text-very-dark-grayish-blue dark:text-light-grayish-blue-dark lg:hover:cursor-grab" 
+      style={style}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+    >
 
       <div className="pl-20 min-h-48 flex items-center text-13 border-b border-light-grayish-blue dark:border-very-dark-grayish-blue-darker xl:h-60">
 

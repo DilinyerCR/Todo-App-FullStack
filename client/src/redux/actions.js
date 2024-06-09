@@ -1,4 +1,4 @@
-import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_ACTIVES, FILTERED_BY_COMPLETED, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SIGNUP_SUCCESS, USER_IS_TAKEN } from "./actions-types";
+import { ADD_TASK, CLEAR_ALL_COMPLETED, CLOSE_TASK, COMPLETED_TASK, FILTERED_BY_ACTIVES, FILTERED_BY_COMPLETED, GET_ALL_USERS, GET_TASKS_BY_USER, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, SIGNUP_SUCCESS, UPDATE_TASKS_ORDER, USER_IS_TAKEN } from "./actions-types";
 
 //Esta action realiza una solicitud GET a la API y despacha una acción para actualizar el estado global con la lista completa de usuarios obtenida de la respuesta.
 export const getAllUsers = () => {
@@ -287,5 +287,12 @@ export const filterByActives = (userId) => {
 export const logout = (value) => {
   return (dispatch) => {
     dispatch({ type: LOGOUT, payload: value });
+  }
+}
+
+//Esta action recibe el nuevo orden de las tasks por parametro, y se lo despacha al estado global por payload. 
+export const updateTasksOrder = (newOrder) => {
+  return (dispatch) => {
+    dispatch({ type: UPDATE_TASKS_ORDER, payload: newOrder });
   }
 }
