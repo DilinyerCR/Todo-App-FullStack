@@ -36,12 +36,7 @@ const Task = ({name, completed, id}) => { //El name viene del componente Tasks
   
   //! ===Rendering===
   return (
-    <div className="text-very-dark-grayish-blue dark:text-light-grayish-blue-dark lg:hover:cursor-grab" 
-      style={style}
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-    >
+    <div className="text-very-dark-grayish-blue dark:text-light-grayish-blue-dark">
 
       <div className="pl-20 min-h-48 flex items-center text-13 border-b border-light-grayish-blue dark:border-very-dark-grayish-blue-darker xl:h-60">
 
@@ -60,7 +55,12 @@ const Task = ({name, completed, id}) => { //El name viene del componente Tasks
           </div>
 
           <div className="flex justify-between w-[80%] md:w-[88%]">
-            <p className={`pl-5 pt-10 pb-10 pr-10 ${completed? 'line-through dark:text-very-dark-grayish-blue-dark text-light-grayish-blue' : 'no-underline'} xl:text-14`}>{name}</p>
+            <p className={`pl-5 pt-10 pb-10 pr-10 ${completed? 'line-through dark:text-very-dark-grayish-blue-dark text-light-grayish-blue' : 'no-underline'} xl:text-14 lg:hover:cursor-grab`}
+              style={style}
+              ref={setNodeRef}
+              {...attributes}
+              {...listeners}
+            >{name}</p>
             <div className="flex justify-center items-center">
               <button className="w-13 h-13 xl:w-16 xl:h-16" onClick={handleCloseTask}>
                 <img className="w-13 h-13 xl:w-16 xl:h-16" src={crossIcon} alt="crossIcon" />
